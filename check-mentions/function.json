@@ -1,0 +1,32 @@
+{
+  "bindings": [
+    {
+      "type": "timerTrigger",
+      "name": "timer",
+      "schedule": "0 */2 * * * *",
+      "direction": "in"
+    },
+    {
+      "type": "blob",
+      "name": "previousID",
+      "path": "incontainer/lastid",
+      "connection": "fsibotserverless_STORAGE",
+      "direction": "in"
+    },
+    {
+      "type": "blob",
+      "name": "updatedID",
+      "path": "incontainer/lastid",
+      "connection": "fsibotserverless_STORAGE",
+      "direction": "out"
+    },
+    {
+      "type": "queue",
+      "name": "mentionsQueue",
+      "queueName": "mentions",
+      "connection": "fsibotserverless_STORAGE",
+      "direction": "out"
+    }
+  ],
+  "disabled": false
+}
