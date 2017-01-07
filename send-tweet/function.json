@@ -1,0 +1,12 @@
+{
+  "bindings": [
+    {
+      "type": "queueTrigger",
+      "name": "input",
+      "queueName": "tweets",
+      "connection": "fsibotserverless_STORAGE",
+      "direction": "in"
+    }
+  ],
+  "disabled": false
+}
