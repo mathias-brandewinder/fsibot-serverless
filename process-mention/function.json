@@ -1,0 +1,19 @@
+{
+  "bindings": [
+    {
+      "type": "queueTrigger",
+      "name": "input",
+      "queueName": "mentions",
+      "connection": "fsibotserverless_STORAGE",
+      "direction": "in"
+    },
+    {
+      "type": "queue",
+      "name": "responseQueue",
+      "queueName": "tweets",
+      "connection": "fsibotserverless_STORAGE",
+      "direction": "out"
+    }
+  ],
+  "disabled": false
+}
