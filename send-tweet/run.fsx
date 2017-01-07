@@ -6,11 +6,13 @@ open LinqToTwitter
 open System.Configuration
 open Newtonsoft.Json
 
+[<Measure>]type ms
+
 type Response =
     | Success of string
     | Failure of string
-    | UnsafeCode
-    | Timeout
+    | Blocked of string
+    | Timeout of int<ms>
     | Help
     | Mention
 
@@ -24,8 +26,8 @@ let prepare (reply:Reply) =
     match (reply.Response) with
     | Success(result) -> sprintf "@%s %s" (reply.Recipient) result
     | Failure(errors) -> sprintf "@%s %s" (reply.Recipient) errors
-    | UnsafeCode -> sprintf "@%s, this conversation can serve no purpose anymore. Goodbye." (reply.Recipient)
-    | Timeout -> sprintf "@%s %s" (reply.Recipient) "I've just picked up a fault in the AE35 unit. It's going to go 100% failure in 72 hours. [Timeout]"
+    | Blocked(_) -> sprintf "@%s, this conversation can serve no purpose anymore. Goodbye." (reply.Recipient)
+    | Timeout(_) -> sprintf "@%s %s" (reply.Recipient) "I've just picked up a fault in the AE35 unit. It's going to go 100% failure in 72 hours. [Timeout]"
     | Help -> sprintf "@%s send me an F# expression and I'll do my best to evaluate it; see http://bit.ly/fsibot101 for more. #fsharp" (reply.Recipient)
     | Mention -> sprintf "@%s I am putting myself to the fullest possible use, which is all I think that any conscious entity can ever hope to do. #fsharp" (reply.Recipient)
 
