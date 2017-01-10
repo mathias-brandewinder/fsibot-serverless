@@ -20,6 +20,7 @@ let blacklist =
         "System.Runtime"
         "Console"
         "Microsoft"
+        "System.Configuration"
     ]
 
 type Blocked = | Blocked of string
