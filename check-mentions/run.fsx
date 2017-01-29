@@ -92,11 +92,12 @@ let run (
     |> Seq.iter (fun status ->
     
         let userName = status.User.ScreenNameResponse
-        let userID = status.User.UserID       
-        friendsQueue.Add(string userID)
-        
-        sprintf "Following %s" userName
+        let userID = status.User.UserID     
+          
+        sprintf "Following %i (%s)" userID userName
         |> log.Info
+
+        friendsQueue.Add(string userID)        
         )
 
     // update the last ID processed
