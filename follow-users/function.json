@@ -2,7 +2,7 @@
   "bindings": [
     {
       "type": "queueTrigger",
-      "name": "userID",
+      "name": "userName",
       "queueName": "friends",
       "connection": "fsibotserverless_STORAGE",
       "direction": "in"

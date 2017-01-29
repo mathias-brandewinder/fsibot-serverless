@@ -23,15 +23,15 @@ let createContext () =
     authorizer.CredentialStore <- credentials
     new TwitterContext(authorizer)
 
-let run (userID: string, log: TraceWriter) =  
+let run (userName: string, log: TraceWriter) =  
 
-    log.Info(sprintf "Attempt to follow '%s'" userID)
+    log.Info(sprintf "Attempt to follow '%s'" userName)
       
     let context = createContext ()
     
     let _ = 
-        context.CreateFriendshipAsync(uint64 userID, true) 
+        context.CreateFriendshipAsync(userName, true) 
         |> Async.AwaitTask
         |> Async.RunSynchronously
         
-    log.Info(sprintf "Following: '%s'" userID)
+    log.Info(sprintf "Following: '%s'" userName)
