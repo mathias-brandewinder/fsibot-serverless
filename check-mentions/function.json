@@ -26,6 +26,13 @@
       "queueName": "mentions",
       "connection": "fsibotserverless_STORAGE",
       "direction": "out"
+    },
+    {
+      "type": "queue",
+      "name": "friendsQueue",
+      "queueName": "friends",
+      "connection": "fsibotserverless_STORAGE",
+      "direction": "out"
     }
   ],
   "disabled": false

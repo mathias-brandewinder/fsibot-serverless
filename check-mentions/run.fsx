@@ -36,6 +36,7 @@ let createContext () =
 let run (
     timer:TimerInfo, 
     mentionsQueue:ICollector<string>, 
+    friendsQueue:ICollector<string>, 
     previousID:string, 
     updatedID: string byref, 
     log:TraceWriter) =
@@ -67,7 +68,8 @@ let run (
                 select tweet 
                 }
         |> Seq.toList
-    
+
+    // enqueue message to be processed
     mentions
     |> Seq.iter (fun status ->
     
@@ -84,6 +86,18 @@ let run (
         mentionsQueue.Add(msg)
             
         log.Info(msg))
+
+    // enqueue userID to be followed    
+    mentions
+    |> Seq.iter (fun status ->
+    
+        let userName = status.User.ScreenNameResponse
+        let userID = status.User.UserID       
+        friendsQueue.Add(string userID)
+        
+        sprintf "Following %s" userName
+        |> log.Info
+        )
 
     // update the last ID processed
     let updatedLastID =
