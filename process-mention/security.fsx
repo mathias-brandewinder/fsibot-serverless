@@ -207,7 +207,10 @@ let rec check (exp:SynExpr) =
     | SynExpr.YieldOrReturnFrom(_,x,_) -> check x
 
 let safetyCheck (fsiSession:FsiEvaluationSession) (code:string) =
-    let (pfr,_,_) = code |> fsiSession.ParseAndCheckInteraction
+    let (pfr,_,_) = 
+        code 
+        |> fsiSession.ParseAndCheckInteraction 
+        |> Async.RunSynchronously    
     let tree = pfr.ParseTree.Value
     match tree with
     | ParsedInput.ImplFile(implementation) ->
