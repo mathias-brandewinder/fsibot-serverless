@@ -10,8 +10,8 @@ open Microsoft.FSharp.Compiler.Ast
 open Microsoft.FSharp.Compiler.Interactive.Shell
 open Newtonsoft.Json
 
-// #load "security.fsx"
-// open Security
+#load "security.fsx"
+open Security.Checker
 
 type Mention = {
     StatusID:uint64
@@ -102,30 +102,16 @@ let runner (session:FsiEvaluationSession,output:StringWriter) (code:string) =
 
 let fsi (timeout:int<ms>) (code:string) =  
 
-        let source = new CancellationTokenSource()
-        let token = source.Token
-        let session,output = createSession ()
-
-        let work = Task.Factory.StartNew<Response>(fun _ -> 
-            runner (session,output) code)
-
-        if work.Wait(int timeout)
-        then work.Result
-        else  
-            source.Cancel ()
-            session.Interrupt ()
-            Timeout(timeout) 
-(*                
     match (unsafeQuick code) with
     | Some(banned) -> Blocked(banned)
     | None ->
-        let source = new CancellationTokenSource()
-        let token = source.Token
-        let session,output = createSession ()
-
-        match (unsafeDeep session code) with
+        match (unsafeDeep code) with
         | Some(banned) -> Blocked(banned)
         | None ->
+            let source = new CancellationTokenSource()
+            let token = source.Token
+            let session,output = createSession ()
+
             let work = Task.Factory.StartNew<Response>(fun _ -> 
                 runner (session,output) code)
 
@@ -135,7 +121,6 @@ let fsi (timeout:int<ms>) (code:string) =
                 source.Cancel ()
                 session.Interrupt ()
                 Timeout(timeout) 
-*)
 
 let (|HelpRequest|_|) (body:string) =
     if (body.Contains("#help"))
@@ -180,3 +165,4 @@ let run (
     responseQueue <- response
     
     log.Info(sprintf "Processed: '%s'" input)
+    
