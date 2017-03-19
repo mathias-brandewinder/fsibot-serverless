@@ -2,7 +2,7 @@
   "frameworks": {
     "net46":{
       "dependencies": {
-        "FSharp.Compiler.Service": "11.0.6",
+        "FSharp.Compiler.Service": "9.0.1",
         "Newtonsoft.Json": "9.0.1"
       }
     }
